@@ -8,7 +8,6 @@ jobs:
     
     env:
       project: 'MyRoslynAnalyzer.Package.csproj'
-      config: 'Release'
     
     runs-on: windows-latest
     
@@ -22,10 +21,10 @@ jobs:
       run: dotnet restore $project
       working-directory: MyRoslynAnalyzer/MyRoslynAnalyzer.Package
     - name: Build
-      run: dotnet build $project --configuration $config --no-restore
+      run: dotnet build $project --configuration Release --no-restore
       working-directory: MyRoslynAnalyzer/MyRoslynAnalyzer.Package
     - name: Pack
-      run: dotnet pack $project --configuration $config
+      run: dotnet pack $project --configuration Release
       working-directory: MyRoslynAnalyzer/MyRoslynAnalyzer.Package
     - name: Setup NuGet credentials
       uses: nuget/setup-nuget@v1
