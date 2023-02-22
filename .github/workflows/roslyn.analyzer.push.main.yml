@@ -31,5 +31,5 @@ jobs:
       with:
         nuget-api-key: ${{ secrets.NUGET_API_KEY }}
     - name: Push 
-      run: nuget push **/MyRoslynAnalyzer.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json --skip-duplicate
+      run: dotnet nuget push **/MyRoslynAnalyzer.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json --skip-duplicate
       working-directory: MyRoslynAnalyzer/MyRoslynAnalyzer.Package
