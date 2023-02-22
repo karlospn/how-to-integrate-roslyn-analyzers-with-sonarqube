@@ -7,7 +7,7 @@ jobs:
   build_and_publish:
     
     env:
-      project: 'MyRoslynAnalyzer/MyRoslynAnalyzer.Package/MyRoslynAnalyzer.Package.csproj'
+      project: 'MyRoslynAnalyzer.Package.csproj'
       config: 'Release'
     
     runs-on: windows-latest
@@ -20,12 +20,17 @@ jobs:
         dotnet-version: 6.0.100
     - name: Restore Dependencies
       run: dotnet restore $project
+      working-directory: MyRoslynAnalyzer/MyRoslynAnalyzer.Package
     - name: Build
       run: dotnet build $project --configuration $config --no-restore
+      working-directory: MyRoslynAnalyzer/MyRoslynAnalyzer.Package
     - name: Pack
       run: dotnet pack $project --configuration $config
-    - name: Publish to NuGet
+      working-directory: MyRoslynAnalyzer/MyRoslynAnalyzer.Package
+    - name: Setup NuGet credentials
       uses: nuget/setup-nuget@v1
       with:
         nuget-api-key: ${{ secrets.NUGET_API_KEY }}
-    - run: nuget push **/MyRoslynAnalyzer.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json --skip-duplicate
+    - name: Push 
+      run: nuget push **/MyRoslynAnalyzer.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json --skip-duplicate
+      working-directory: MyRoslynAnalyzer/MyRoslynAnalyzer.Package
